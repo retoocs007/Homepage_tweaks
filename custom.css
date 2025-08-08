@@ -1,0 +1,135 @@
+body, html {
+  background-color: #0F243B;
+}
+
+/* FAR STARS: small + faint + slow */
+#background::before {
+  --tile: 220px;
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;           /* above background image */
+  pointer-events: none;
+  background:
+    radial-gradient(1px 1px at 10px 20px, #fff, transparent 1px),
+    radial-gradient(1px 1px at 70px 40px, #fff, transparent 2px),
+    radial-gradient(1px 1px at 130px 90px, #fff, transparent 1px),
+    radial-gradient(1px 1px at 180px 160px, #fff, transparent 2px),
+    radial-gradient(1px 1px at 30px 150px, #fff, transparent 1px),
+    radial-gradient(1px 1px at 110px 10px, #fff, transparent 1px),
+    radial-gradient(1px 1px at 160px 70px, #fff, transparent 2px),
+    radial-gradient(1px 1px at 15px 95px, #fff, transparent 1px),
+    radial-gradient(1px 1px at 90px 180px, #fff, transparent 2px),
+    radial-gradient(1px 1px at 200px 50px, #fff, transparent 1px),
+    radial-gradient(1px 1px at 175px 120px, #fff, transparent 1px),
+    radial-gradient(1px 1px at 50px 80px, #fff, transparent 2px);
+  background-size: var(--tile) var(--tile);
+  background-repeat: repeat;
+  opacity: 0.35;
+  animation: starDriftFar 40s linear infinite;
+  will-change: background-position;
+}
+
+/* NEAR STARS: bigger + brighter + faster + twinkle */
+#background::after {
+  --tile: 240px;
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;           /* above far stars */
+  pointer-events: none;
+  background:
+    radial-gradient(3px 3px at 25px 60px, #fff, transparent 3px),
+    radial-gradient(2px 2px at 140px 30px, #fff, transparent 2px),
+    radial-gradient(2px 2px at 80px 120px, #fff, transparent 2px),
+    radial-gradient(2px 2px at 170px 170px, #fff, transparent 2px),
+    radial-gradient(3px 3px at 60px 10px, #fff, transparent 3px),
+    radial-gradient(2px 2px at 190px 95px, #fff, transparent 2px),
+    radial-gradient(2px 2px at 10px 180px, #fff, transparent 2px),
+    radial-gradient(2px 2px at 115px 165px, #fff, transparent 2px),
+    radial-gradient(3px 3px at 45px 40px, #fff, transparent 3px),
+    radial-gradient(2px 2px at 95px 75px, #fff, transparent 2px),
+    radial-gradient(3px 3px at 155px 15px, #fff, transparent 3px),
+    radial-gradient(2px 2px at 205px 145px, #fff, transparent 2px);
+  background-size: var(--tile) var(--tile);
+  background-repeat: repeat;
+  opacity: 0.65;
+  animation: starDriftNear 20s linear infinite, starTwinkle 3.5s ease-in-out infinite;
+  will-change: background-position, opacity;
+}
+
+/* Seamless movement (exactly one tile) */
+@keyframes starDriftFar {
+  from { background-position: 0 0; }
+  to   { background-position: calc(var(--tile) * -1) calc(var(--tile) * -1); }
+}
+@keyframes starDriftNear {
+  from { background-position: 0 0; }
+  to   { background-position: calc(var(--tile) * -1) calc(var(--tile) * -1); }
+}
+@keyframes starTwinkle {
+  0%, 100% { opacity: 0.45; }
+  50% { opacity: 0.85; }
+}
+
+.relative.container.m-auto.flex.flex-col.justify-start.z-10.h-full {
+  max-width:100%;
+  margin:0;
+  margin-left:0;
+  margin-right:0;
+}
+
+.relative.z-40.ease-in-out.duration-300.transition-opacity.hidden opacity-0{
+
+}
+
+/* Default: Apply bookmark-like background to the entire button (row) when not expanded */
+.bookmark-group button[aria-expanded="false"] {
+    background-color: hsla(0,0%,100%,.05); /* Example light background */
+    backdrop-filter: blur(24px); /* Optional blur effect */
+    border-radius: 0.5rem; /* Rounded corners */
+    padding: 0.5rem; /* Inner spacing for the row */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    display: flex; /* Ensure it behaves as a row */
+    align-items: center; /* Vertically center content */
+    transition: background 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+}
+
+/* Default: Text is visible */
+.bookmark-group button[aria-expanded="false"] .bookmark-group-name {
+  color: rgb(var(--color-300)/1);
+  font-size: 1em;
+}
+/* before>>> color: rgb(var(--color-300)/var(--tw-text-opacity));  */
+
+
+/* When expanded: Text becomes transparent */
+.bookmark-group button[aria-expanded="true"] .bookmark-group-name {
+  color: transparent;
+}
+
+
+/* Show SVG arrow when not expanded */
+.bookmark-group button[aria-expanded="false"] svg {
+    opacity: 1; /* Make it visible */
+    transform: rotate(0deg); /* Ensure it's pointing in the desired direction */
+    transition: transform 0.3s ease, opacity 0.3s ease; /* Smooth transition */
+}
+
+#information-widgets {
+    margin-top: 1em;
+}
+
+#footer {
+    padding-top: 0;
+    padding-bottom: 1em;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+#layout-groups {
+  margin-top: 2rem;
+  margin-right: 2rem;
+  margin-bottom: 1em;
+  margin-left: 2rem;
+}
