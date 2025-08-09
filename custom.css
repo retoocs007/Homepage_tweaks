@@ -8,7 +8,7 @@ body, html {
   content: "";
   position: absolute;
   inset: 0;
-  z-index: 1;           /* above background image */
+  z-index: 3;           /* above background image */
   pointer-events: none;
   background:
     radial-gradient(1px 1px at 10px 20px, #fff, transparent 1px),
@@ -25,7 +25,7 @@ body, html {
     radial-gradient(1px 1px at 50px 80px, #fff, transparent 2px);
   background-size: var(--tile) var(--tile);
   background-repeat: repeat;
-  opacity: 0.35;
+  opacity: 0.45;
   animation: starDriftFar 40s linear infinite;
   will-change: background-position;
 }
@@ -36,7 +36,7 @@ body, html {
   content: "";
   position: absolute;
   inset: 0;
-  z-index: 2;           /* above far stars */
+  z-index: 4;           /* above far stars */
   pointer-events: none;
   background:
     radial-gradient(3px 3px at 25px 60px, #fff, transparent 3px),
@@ -44,10 +44,10 @@ body, html {
     radial-gradient(2px 2px at 80px 120px, #fff, transparent 2px),
     radial-gradient(2px 2px at 170px 170px, #fff, transparent 2px),
     radial-gradient(3px 3px at 60px 10px, #fff, transparent 3px),
-    radial-gradient(2px 2px at 190px 95px, #fff, transparent 2px),
+    radial-gradient(4px 4px at 190px 95px, #fff, transparent 4px),
     radial-gradient(2px 2px at 10px 180px, #fff, transparent 2px),
     radial-gradient(2px 2px at 115px 165px, #fff, transparent 2px),
-    radial-gradient(3px 3px at 45px 40px, #fff, transparent 3px),
+    radial-gradient(4px 4px at 45px 40px, #fff, transparent 4px),
     radial-gradient(2px 2px at 95px 75px, #fff, transparent 2px),
     radial-gradient(3px 3px at 155px 15px, #fff, transparent 3px),
     radial-gradient(2px 2px at 205px 145px, #fff, transparent 2px);
@@ -69,7 +69,7 @@ body, html {
 }
 @keyframes starTwinkle {
   0%, 100% { opacity: 0.45; }
-  50% { opacity: 0.85; }
+  50% { opacity: 1; }
 }
 
 .relative.container.m-auto.flex.flex-col.justify-start.z-10.h-full {
