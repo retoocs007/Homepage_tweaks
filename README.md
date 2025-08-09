@@ -8,7 +8,7 @@ Edit your `custom.css` with parts that you need.
 
 CSS includes:
  - Background color to tint Safari Tab Bar on iPadOS (Show Color in Tab Bar)
- - Dynamic stars overlay (best with darker background)
+ - Animated starfield overlay (best with darker background)
  - Other tweaks to clean up and use more avaliable space on iPad and PC browsers
 
 `stars_with_fog.css` have fog animation. It's sluggish on iPad 10th gen running iPadOS 26 dev beta 5.
