@@ -1,7 +1,10 @@
 # Homepage_tweaks
 Cusom CSS and other stuff for Homepage (https://github.com/gethomepage/homepage)
 
-Edit your custom.css with parts that you need.
+<img src="/demo.webp" alt="Demo" width="800">
+
+
+Edit your `custom.css` with parts that you need.
 
 CSS includes:
  - Background color to tint Safari Tab Bar on iPadOS (Show Color in Tab Bar)
