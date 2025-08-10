@@ -18,4 +18,4 @@ CSS includes:
 `custom.css` is with `stars.css` and other tweaks. If you want to add fog and/or rocket then add code from `fog.css` and/or `rocket.css` in to `custom.css`.
 `lavalamp.css` and `rocket.css` can't be used at the same time (both are in `body::after`).
 
-Keep in mind that animation is CPU/GPU resource heavy, it will drain battery faster.
+Keep in mind that animation is CPU/GPU resource heavy, it will drain battery faster. 
