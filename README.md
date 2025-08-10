@@ -9,7 +9,11 @@ Edit your `custom.css` with parts that you need.
 CSS includes:
  - Background color to tint Safari Tab Bar on iPadOS (Show Color in Tab Bar)
  - Animated starfield overlay (best with darker background)
+   - `stars.css` - two layer of stars
+   - `fog.css` - fog overlay
+   - `rocket.css` - small rocket flying across the screen
  - Other tweaks to clean up and use more avaliable space on iPad and PC browsers
 
-`stars_with_fog.css` have fog animation. It's sluggish on iPad 10th gen running iPadOS 26 dev beta 5.
-If you want to try it yourself copy code from `stars_with_fog.css` and replace lines form 5 to 73 in `custom.css`.
+`custom.css` is with `stars.css` and `fog.css`. If you want to add rocket then add code from `rocket.css` in to `custom.css`.
+
+Keep in mind that animation is CPU/GPU resource havy.
