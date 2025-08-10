@@ -8,9 +8,11 @@ body, html {
   --far-tile: 192px;
   --near-tile: 208px;
   --far-opacity: .35;
-  --near-opacity: .50;
+  --near-opacity: .70;
   --far-speed: 48s;
   --near-speed: 22s;
+  --far-steps: 600;
+  --near-steps: 600;
 }
 
 /* make #background a containing block */
@@ -57,7 +59,7 @@ body, html {
   opacity: var(--far-opacity);
 
   animation: 
-    tileTranslate var(--far-speed) linear infinite;
+    tileTranslate var(--far-speed) steps(var(--far-steps), end) infinite;
 }
 
 /* NEAR layer — transform scroll (no opacity tween) */
@@ -92,26 +94,13 @@ body, html {
     <circle cx='95' cy='75'  r='1.2'/>\
     <circle cx='165' cy='22' r='1.5'/>\
   </g>\
-  <g fill='white' fill-opacity='0.25'>\
-    <circle cx='25' cy='60' r='3.0'/>\
-    <circle cx='140' cy='30' r='2.6'/>\
-    <circle cx='80' cy='120' r='2.8'/>\
-    <circle cx='190' cy='180' r='2.4'/>\
-    <circle cx='60' cy='16'  r='3.2'/>\
-    <circle cx='12' cy='190' r='2.2'/>\
-    <circle cx='118' cy='172' r='2.6'/>\
-    <circle cx='45' cy='40'  r='2.8'/>\
-    <circle cx='95' cy='75'  r='2.3'/>\
-    <circle cx='165' cy='22' r='2.9'/>\
-  </g>\
 </svg>");
   background-size: var(--tile) var(--tile);
   background-repeat: repeat;
   opacity: var(--near-opacity);
 
   animation:
-    tileTranslate var(--near-speed) linear infinite,
-    twinkle var(--twinkle, 5.5s) ease-in-out infinite alternate;
+    tileTranslate var(--near-speed) steps(var(--near-steps), end) infinite;
 }
 
 /* move the layer by exactly one tile so the loop is seamless */
@@ -119,7 +108,7 @@ body, html {
   to { transform: translate3d(calc(var(--tile) * -1), calc(var(--tile) * -1), 0); }
 }
 
-/* lightweight opacity twinkle */
+/* lightweight opacity twinkle - not used currently */
 @keyframes twinkle {
   0%, 100% { opacity: var(--near-opacity); }
   50%      { opacity: 1; }
