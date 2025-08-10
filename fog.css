@@ -1,21 +1,25 @@
-/* ---FOG--- */
+/* === FOG === */
+
 :root{
-  --fog-tile: 640px;
-  --fog-opacity: 0.08;
-  --fog-speed: 115s;  /* drift duration */
+  --fog-tile: 640px;      /* size of the seamless tile */
+  --fog-opacity: 0.05;    /* overall fog strength */
+  --fog-speed: 10s;      /* time to drift one tile diagonally */
+  --fog-steps: 320;
 }
 
-/* Seamless stitched SVG fog */
+/* Oversized fixed layer that slides by exactly one tile via transform */
 body::before{
   content:"";
   position: fixed;
-  inset: 0;
+  /* extend one tile beyond each edge so we can slide without exposing gaps */
+  top:    calc(var(--fog-tile) * -1);
+  left:   calc(var(--fog-tile) * -1);
+  right:  calc(var(--fog-tile) * -1);
+  bottom: calc(var(--fog-tile) * -1);
   z-index: 2;
   pointer-events: none;
-
   opacity: var(--fog-opacity);
 
-  /* Seamless noise using feTurbulence with stitchTiles */
   background-image: url("data:image/svg+xml;utf8,\
 <svg xmlns='http://www.w3.org/2000/svg' width='640' height='640' viewBox='0 0 640 640'>\
   <defs>\
@@ -34,17 +38,17 @@ body::before{
   background-size: var(--fog-tile) var(--fog-tile);
   background-repeat: repeat;
 
-  /* animating background-position avoids the one-frame transform snap */
-  animation: fogSlide var(--fog-speed) linear infinite;
+  /* GPU-friendly drift */
+  animation: fogDrift var(--fog-speed) steps(var(--fog-steps), end) infinite;
 
-  /* hints */
+  /* performance hints */
+  will-change: transform, opacity;
   contain: paint;
-  will-change: background-position, opacity;
   backface-visibility: hidden;
 }
 
-/* move exactly one tile diagonally for a perfect, flick-free loop */
-@keyframes fogSlide{
-  from { background-position: 0 0; }
-  to   { background-position: calc(var(--fog-tile) * -1) calc(var(--fog-tile) * -1); }
+/* Move exactly one tile diagonally; start and end frames are identical ? seamless loop */
+@keyframes fogDrift{
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(calc(var(--fog-tile) * -1), calc(var(--fog-tile) * -1), 0); }
 }

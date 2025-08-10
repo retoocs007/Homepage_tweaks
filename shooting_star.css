@@ -1,9 +1,9 @@
-/* === ROCKET === */
+/* === SHOOTING STAR === */
 
 :root{
-  --rocket-size: 14px;
-  --rocket-angle: 300deg;
-  --leg: 35s;
+  --rocket-size: 70px;
+  --rocket-angle: 215deg;
+  --leg: 3s;
   --legs: calc(var(--leg) * 8);
   --rocket-steps: 240;
 }
@@ -21,17 +21,22 @@ body::after{
   pointer-events: none;
   background:
     url("data:image/svg+xml;utf8,\
-      <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 100'>\
-        <style>.s{stroke:%23000;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}</style>\
-        <path class='s' d='M25 3c11 10 16 28 14 51H11C9 31 14 13 25 3Z' fill='%23ececec'/>\
-        <path class='s' d='M25 3 36 16 14 16Z' fill='%23ff4d4d'/>\
-        <circle class='s' cx='27' cy='36' r='8' fill='%238aa0b6'/>\
-        <circle class='s' cx='27' cy='36' r='5.5' fill='%23188cf0'/>\
-        <path class='s' d='M11 54 2 66 14 63Z' fill='%23ff4d4d'/>\
-        <path class='s' d='M39 54 48 66 36 63Z' fill='%23ff4d4d'/>\
-        <rect class='s' x='20' y='54' width='10' height='9' rx='2' ry='2' fill='%23999'/>\
-        <path class='s' d='M25 63 15 77 25 72 35 77Z' fill='%23ffa62b'/>\
-      </svg>") center / contain no-repeat;
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 140 40'>\
+  <defs>\
+    <linearGradient id='t' x1='100%' y1='50%' x2='0%' y2='50%'>\
+      <stop offset='0%' stop-color='%23fff' stop-opacity='0'/>\
+      <stop offset='20%' stop-color='%23fff' stop-opacity='.25'/>\
+      <stop offset='60%' stop-color='%23fff' stop-opacity='.6'/>\
+      <stop offset='100%' stop-color='%23fff' stop-opacity='.95'/>\
+    </linearGradient>\
+    <radialGradient id='c' cx='100%' cy='50%' r='30%'>\
+      <stop offset='0%' stop-color='%23fff'/>\
+      <stop offset='100%' stop-color='%23fff' stop-opacity='0'/>\
+    </radialGradient>\
+  </defs>\
+  <rect x='0' y='18' width='120' height='4' rx='2' fill='url(%23t)'/>\
+  <circle cx='120' cy='20' r='6' fill='url(%23c)'/>\
+</svg>") center / contain no-repeat;
 
   /* performance hints */
   will-change: transform, opacity;
