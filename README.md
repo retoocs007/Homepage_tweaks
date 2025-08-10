@@ -16,4 +16,4 @@ CSS includes:
 
 `custom.css` is with `stars.css` and `fog.css`. If you want to add rocket then add code from `rocket.css` in to `custom.css`.
 
-Keep in mind that animation is CPU/GPU resource havy.
+Keep in mind that animation is CPU/GPU resource heavy.
