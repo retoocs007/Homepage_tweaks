@@ -14,6 +14,6 @@ CSS includes:
    - `rocket.css` - small rocket flying across the screen
  - Other tweaks to clean up and use more avaliable space on iPad and PC browsers
 
-`custom.css` is with `stars.css` and `fog.css`. If you want to add rocket then add code from `rocket.css` in to `custom.css`.
+`custom.css` is with `stars.css` and other tweaks. If you want to add fog and/or rocket then add code from `fog.css` and/or `rocket.css` in to `custom.css`.
 
-Keep in mind that animation is CPU/GPU resource heavy.
+Keep in mind that animation is CPU/GPU resource heavy, it will drain battery faster.
