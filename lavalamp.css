@@ -1,0 +1,84 @@
+/* LAVA LAMP — full-screen, pointer-safe, transform-only animation */
+
+:root{
+  --lava-opacity: 0.2;   /* overall intensity */
+  --lava-z: 6;            /* stacking above your bg */
+  --lava-pan: 50s;        /* slow camera drift */
+}
+
+body::after{
+  content:"";
+  position: fixed;
+  inset: 0;
+  z-index: var(--lava-z);
+  pointer-events: none;
+  opacity: var(--lava-opacity);
+
+  /* SVG with gooey filter + animated blobs (SMIL runs inside the SVG) */
+  background:
+    url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 1200' width='800' height='1200'>\
+  <defs>\
+    <linearGradient id='g' x1='0' y1='0' x2='0' y2='1'>\
+      <stop offset='0%'  stop-color='%23ff6a00'/>\
+      <stop offset='50%' stop-color='%23ff2d55'/>\
+      <stop offset='100%' stop-color='%230a0a1a'/>\
+    </linearGradient>\
+    <filter id='goo'>\
+      <feGaussianBlur in='SourceGraphic' stdDeviation='22' result='b'/>\
+      <feColorMatrix in='b' mode='matrix' values='1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 28 -14' result='g'/>\
+      <feBlend in='SourceGraphic' in2='g'/>\
+    </filter>\
+  </defs>\
+  <rect width='800' height='1200' fill='%23050a16'/>\
+  <g filter='url(%23goo)' fill='url(%23g)' opacity='0.95'>\
+    <!-- Big blobs -->\
+    <circle r='140'>\
+      <animate attributeName='cx' values='220;600;320;220' dur='55s' repeatCount='indefinite'/>\
+      <animate attributeName='cy' values='1100;820;320;1100' dur='55s' repeatCount='indefinite'/>\
+    </circle>\
+    <circle r='110'>\
+      <animate attributeName='cx' values='620;180;520;620' dur='60s' repeatCount='indefinite'/>\
+      <animate attributeName='cy' values='900;500;200;900' dur='60s' repeatCount='indefinite'/>\
+    </circle>\
+    <circle r='95'>\
+      <animate attributeName='cx' values='120;360;140;120' dur='50s' repeatCount='indefinite'/>\
+      <animate attributeName='cy' values='780;260;540;780' dur='50s' repeatCount='indefinite'/>\
+    </circle>\
+    <!-- Medium blobs -->\
+    <circle r='70'>\
+      <animate attributeName='cx' values='420;690;470;420' dur='46s' repeatCount='indefinite'/>\
+      <animate attributeName='cy' values='1060;740;460;1060' dur='46s' repeatCount='indefinite'/>\
+    </circle>\
+    <circle r='65'>\
+      <animate attributeName='cx' values='260;520;280;260' dur='48s' repeatCount='indefinite'/>\
+      <animate attributeName='cy' values='980;600;360;980' dur='48s' repeatCount='indefinite'/>\
+    </circle>\
+    <!-- Small bubbles rising -->\
+    <g opacity='0.7'>\
+      <circle r='26'>\
+        <animate attributeName='cx' values='90;110;95;90' dur='42s' repeatCount='indefinite'/>\
+        <animate attributeName='cy' values='1150;950;780;1150' dur='42s' repeatCount='indefinite'/>\
+      </circle>\
+      <circle r='20'>\
+        <animate attributeName='cx' values='700;680;720;700' dur='40s' repeatCount='indefinite'/>\
+        <animate attributeName='cy' values='1120;860;640;1120' dur='40s' repeatCount='indefinite'/>\
+      </circle>\
+      <circle r='18'>\
+        <animate attributeName='cx' values='360;340;380;360' dur='39s' repeatCount='indefinite'/>\
+        <animate attributeName='cy' values='1080;800;560;1080' dur='39s' repeatCount='indefinite'/>\
+      </circle>\
+    </g>\
+  </g>\
+</svg>") center/cover no-repeat;
+
+  /* gentle camera drift (GPU composited) */
+  transform: scale(1.06) translateZ(0);
+  will-change: transform;
+  animation: lava-pan var(--lava-pan) ease-in-out infinite alternate;
+}
+
+@keyframes lava-pan{
+  0%   { transform: scale(1.06) translateY(0); }
+  100% { transform: scale(1.06) translateY(-3%); }
+}
