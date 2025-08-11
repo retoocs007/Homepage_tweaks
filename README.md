@@ -19,4 +19,4 @@ CSS includes:
 `custom.css` is with `starsfield.css`, `fog.css`, `shooting_star.css` and other tweaks. If you want to add lava lamp or rocket then add code from `lava_lamp.css` or `rocket.css` instead of `shooting_star.css` in to `custom.css`.
 `lavalamp.css`, `rocket.css` and `shooting_star.css` can't be used at the same time (both are in `body::after`).
 
-Keep in mind that animation is CPU/GPU resource heavy, it will drain battery faster. 
+Keep in mind that animation is CPU/GPU resource heavy, it will drain battery faster.
