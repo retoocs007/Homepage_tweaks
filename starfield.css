@@ -1,0 +1,114 @@
+/* === STARFIELD === START === */
+
+:root{
+  --stars-color: #fff;
+  --far-tile: 192px;
+  --near-tile: 208px;
+  --far-opacity: .35;
+  --near-opacity: .70;
+  --far-speed: 48s;
+  --near-speed: 22s;
+  --far-steps: 600;
+  --near-steps: 600;
+}
+
+/* make #background a containing block */
+#background { position: relative; overflow: hidden; }
+
+/* FAR layer — transform scroll */
+#background::before{
+  content:"";
+  position:absolute;
+  /* extend beyond viewport so we can slide by one tile without gaps */
+  --tile: var(--far-tile);
+  top: calc(var(--tile) * -1);
+  left: calc(var(--tile) * -1);
+  right: calc(var(--tile) * -1);
+  bottom: calc(var(--tile) * -1);
+  z-index:3;
+  pointer-events:none;
+
+  contain: paint;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translate3d(0,0,0);
+
+  background-image: url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' width='192' height='192' viewBox='0 0 192 192'>\
+  <rect width='192' height='192' fill='transparent'/>\
+  <g fill='white' fill-opacity='1.0'>\
+     <circle cx='10' cy='18' r='0.5'/>\
+    <circle cx='35' cy='42' r='0.9'/>\
+    <circle cx='72' cy='12' r='0.7'/>\
+    <circle cx='95' cy='80' r='1.2'/>\
+    <circle cx='120' cy='30' r='1.2'/>\
+    <circle cx='150' cy='65' r='0.9'/>\
+    <circle cx='22' cy='95' r='0.8'/>\
+    <circle cx='58' cy='70' r='0.5'/>\
+    <circle cx='80' cy='160' r='1.0'/>\
+    <circle cx='160' cy='140' r='1.4'/>\
+    <circle cx='40' cy='155' r='1.2'/>\
+    <circle cx='8' cy='175' r='0.6'/>\
+  </g>\
+</svg>");
+  background-size: var(--tile) var(--tile);
+  background-repeat: repeat;
+  opacity: var(--far-opacity);
+
+  animation: 
+    tileTranslate var(--far-speed) steps(var(--far-steps), end) infinite;
+}
+
+/* NEAR layer — transform scroll (no opacity tween) */
+#background::after{
+  content:"";
+  position:absolute;
+  --tile: var(--near-tile);
+  top: calc(var(--tile) * -1);
+  left: calc(var(--tile) * -1);
+  right: calc(var(--tile) * -1);
+  bottom: calc(var(--tile) * -1);
+  z-index:4;
+  pointer-events:none;
+
+  contain: paint;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translate3d(0,0,0);
+
+  background-image: url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' width='208' height='208' viewBox='0 0 208 208'>\
+  <rect width='208' height='208' fill='transparent'/>\
+  <g fill='white'>\
+    <circle cx='25' cy='60' r='1.7'/>\
+    <circle cx='140' cy='30' r='1.3'/>\
+    <circle cx='80' cy='120' r='1.4'/>\
+    <circle cx='190' cy='180' r='1.3'/>\
+    <circle cx='60' cy='16'  r='1.8'/>\
+    <circle cx='12' cy='190' r='1.2'/>\
+    <circle cx='118' cy='172' r='1.3'/>\
+    <circle cx='45' cy='40'  r='1.6'/>\
+    <circle cx='95' cy='75'  r='1.2'/>\
+    <circle cx='165' cy='22' r='1.5'/>\
+  </g>\
+</svg>");
+  background-size: var(--tile) var(--tile);
+  background-repeat: repeat;
+  opacity: var(--near-opacity);
+
+  animation:
+    tileTranslate var(--near-speed) steps(var(--near-steps), end) infinite;
+}
+
+/* move the layer by exactly one tile so the loop is seamless */
+@keyframes tileTranslate{
+  to { transform: translate3d(calc(var(--tile) * -1), calc(var(--tile) * -1), 0); }
+}
+
+/* lightweight opacity twinkle - not used currently */
+@keyframes twinkle {
+  0%, 100% { opacity: var(--near-opacity); }
+  50%      { opacity: 1; }
+}
+
+/* === STARFIELD === END === */

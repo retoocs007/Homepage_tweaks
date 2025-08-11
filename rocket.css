@@ -1,4 +1,4 @@
-/* === ROCKET === */
+/* === ROCKET === START === */
 
 :root{
   --rocket-size: 14px;
@@ -140,3 +140,5 @@ body::after{
     100% { opacity:0; }
   }
 }
+
+/* === ROCKET === END === */

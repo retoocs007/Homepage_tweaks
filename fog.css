@@ -1,4 +1,4 @@
-/* === FOG === */
+/* === FOG === START === */
 
 :root{
   --fog-tile: 640px;      /* size of the seamless tile */
@@ -52,3 +52,5 @@ body::before{
   from { transform: translate3d(0, 0, 0); }
   to   { transform: translate3d(calc(var(--fog-tile) * -1), calc(var(--fog-tile) * -1), 0); }
 }
+
+/* === FOG === END === */

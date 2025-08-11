@@ -1,4 +1,4 @@
-/* === LAVA LAMP === */
+/* === LAVA LAMP === START === */
 
 :root{
   --lava-opacity: 0.2;   /* overall intensity */
@@ -82,3 +82,5 @@ body::after{
   0%   { transform: scale(1.06) translateY(0); }
   100% { transform: scale(1.06) translateY(-3%); }
 }
+
+/* === LAVA LAMP === END === */

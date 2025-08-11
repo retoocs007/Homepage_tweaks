@@ -1,11 +1,11 @@
-/* === SHOOTING STAR === */
+/* === SHOOTING STAR === START === */
 
 :root{
-  --rocket-size: 70px;
-  --rocket-angle: 215deg;
+  --star-size: 70px;
+  --star-angle: 215deg;
   --leg: 3s;
   --legs: calc(var(--leg) * 8);
-  --rocket-steps: 240;
+  --star-steps: 240;
 }
 
 html, body { height: 100%; }
@@ -15,8 +15,8 @@ body::after{
   content:"";
   position: fixed;
   top: 0; left: 0;
-  width: var(--rocket-size);
-  height: calc(var(--rocket-size) * 2);
+  width: var(--star-size);
+  height: calc(var(--star-size) * 2);
   z-index: 6;
   pointer-events: none;
   background:
@@ -56,10 +56,10 @@ body::after{
   body::after{
     transform:
       translate3d(calc(var(--ox) + var(--tx)), calc(var(--oy) + var(--ty)), 0)
-      rotate(var(--rocket-angle));
+      rotate(var(--star-angle));
     animation:
       /* per-leg motion done in discrete steps -> fewer compositor updates */
-      fly var(--leg) steps(var(--rocket-steps), end) infinite,
+      fly var(--leg) steps(var(--star-steps), end) infinite,
       /* snapped re-seeding of start positions (8 legs) */
       offsets var(--legs) steps(1, end) infinite;
   }
@@ -72,7 +72,7 @@ body::after{
     100% { --tx: -200vw; --ty: -200vh; opacity: 0; } /* off far corner */
   }
 
-  /* 8 start offsets (kept close so rocket appears quickly each leg) */
+  /* 8 start offsets (kept close so star appears quickly each leg) */
   @keyframes offsets{
     0%,     12.499% { --ox: 108vw; --oy: 82vh; }
     12.5%,  24.999% { --ox: 120vw; --oy: 70vh; }
@@ -89,59 +89,61 @@ body::after{
 @supports not (property(--ox)) {
 
   body::after{
-    animation: rocketMulti var(--legs) linear infinite both;
+    animation: starMulti var(--legs) linear infinite both;
   }
 
   /* We run 8 legs in one timeline; opacity goes 0?1 after the jump.
      Motion is stepped to reduce compositor updates. */
-  @keyframes rocketMulti{
+  @keyframes starMulti{
 
     /* LEG 1 */
-    0%   { opacity:0; transform: translate3d(108vw,82vh,0) rotate(var(--rocket-angle)); }
-    0.1% { opacity:1; transform: translate3d(108vw,82vh,0) rotate(var(--rocket-angle)); }
-    12%  {           transform: translate3d(-92vw,-118vh,0) rotate(var(--rocket-angle)); animation-timing-function: steps(var(--rocket-steps), end); }
+    0%   { opacity:0; transform: translate3d(108vw,82vh,0) rotate(var(--star-angle)); }
+    0.1% { opacity:1; transform: translate3d(108vw,82vh,0) rotate(var(--star-angle)); }
+    12%  {           transform: translate3d(-92vw,-118vh,0) rotate(var(--star-angle)); animation-timing-function: steps(var(--star-steps), end); }
     12.1%{ opacity:0; }
 
     /* LEG 2 */
-    12.5%{ opacity:0; transform: translate3d(120vw,70vh,0) rotate(var(--rocket-angle)); }
-    12.6%{ opacity:1; transform: translate3d(120vw,70vh,0) rotate(var(--rocket-angle)); }
-    24%  {           transform: translate3d(-80vw,-130vh,0) rotate(var(--rocket-angle)); animation-timing-function: steps(var(--rocket-steps), end); }
+    12.5%{ opacity:0; transform: translate3d(120vw,70vh,0) rotate(var(--star-angle)); }
+    12.6%{ opacity:1; transform: translate3d(120vw,70vh,0) rotate(var(--star-angle)); }
+    24%  {           transform: translate3d(-80vw,-130vh,0) rotate(var(--star-angle)); animation-timing-function: steps(var(--star-steps), end); }
     24.1%{ opacity:0; }
 
     /* LEG 3 */
-    25%  { opacity:0; transform: translate3d(102vw,96vh,0) rotate(var(--rocket-angle)); }
-    25.1%{ opacity:1; transform: translate3d(102vw,96vh,0) rotate(var(--rocket-angle)); }
-    36%  {           transform: translate3d(-98vw,-104vh,0) rotate(var(--rocket-angle)); animation-timing-function: steps(var(--rocket-steps), end); }
+    25%  { opacity:0; transform: translate3d(102vw,96vh,0) rotate(var(--star-angle)); }
+    25.1%{ opacity:1; transform: translate3d(102vw,96vh,0) rotate(var(--star-angle)); }
+    36%  {           transform: translate3d(-98vw,-104vh,0) rotate(var(--star-angle)); animation-timing-function: steps(var(--star-steps), end); }
     36.1%{ opacity:0; }
 
     /* LEG 4 */
-    37.5%{ opacity:0; transform: translate3d(128vw,78vh,0) rotate(var(--rocket-angle)); }
-    37.6%{ opacity:1; transform: translate3d(128vw,78vh,0) rotate(var(--rocket-angle)); }
-    48%  {           transform: translate3d(-72vw,-122vh,0) rotate(var(--rocket-angle)); animation-timing-function: steps(var(--rocket-steps), end); }
+    37.5%{ opacity:0; transform: translate3d(128vw,78vh,0) rotate(var(--star-angle)); }
+    37.6%{ opacity:1; transform: translate3d(128vw,78vh,0) rotate(var(--star-angle)); }
+    48%  {           transform: translate3d(-72vw,-122vh,0) rotate(var(--star-angle)); animation-timing-function: steps(var(--star-steps), end); }
     48.1%{ opacity:0; }
 
     /* LEG 5 */
-    50%  { opacity:0; transform: translate3d(110vw,88vh,0) rotate(var(--rocket-angle)); }
-    50.1%{ opacity:1; transform: translate3d(110vw,88vh,0) rotate(var(--rocket-angle)); }
-    60%  {           transform: translate3d(-90vw,-112vh,0) rotate(var(--rocket-angle)); animation-timing-function: steps(var(--rocket-steps), end); }
+    50%  { opacity:0; transform: translate3d(110vw,88vh,0) rotate(var(--star-angle)); }
+    50.1%{ opacity:1; transform: translate3d(110vw,88vh,0) rotate(var(--star-angle)); }
+    60%  {           transform: translate3d(-90vw,-112vh,0) rotate(var(--star-angle)); animation-timing-function: steps(var(--star-steps), end); }
     60.1%{ opacity:0; }
 
     /* LEG 6 */
-    62.5%{ opacity:0; transform: translate3d(134vw,80vh,0) rotate(var(--rocket-angle)); }
-    62.6%{ opacity:1; transform: translate3d(134vw,80vh,0) rotate(var(--rocket-angle)); }
-    72%  {           transform: translate3d(-66vw,-120vh,0) rotate(var(--rocket-angle)); animation-timing-function: steps(var(--rocket-steps), end); }
+    62.5%{ opacity:0; transform: translate3d(134vw,80vh,0) rotate(var(--star-angle)); }
+    62.6%{ opacity:1; transform: translate3d(134vw,80vh,0) rotate(var(--star-angle)); }
+    72%  {           transform: translate3d(-66vw,-120vh,0) rotate(var(--star-angle)); animation-timing-function: steps(var(--star-steps), end); }
     72.1%{ opacity:0; }
 
     /* LEG 7 */
-    75%  { opacity:0; transform: translate3d(118vw,100vh,0) rotate(var(--rocket-angle)); }
-    75.1%{ opacity:1; transform: translate3d(118vw,100vh,0) rotate(var(--rocket-angle)); }
-    84%  {           transform: translate3d(-82vw,-100vh,0) rotate(var(--rocket-angle)); animation-timing-function: steps(var(--rocket-steps), end); }
+    75%  { opacity:0; transform: translate3d(118vw,100vh,0) rotate(var(--star-angle)); }
+    75.1%{ opacity:1; transform: translate3d(118vw,100vh,0) rotate(var(--star-angle)); }
+    84%  {           transform: translate3d(-82vw,-100vh,0) rotate(var(--star-angle)); animation-timing-function: steps(var(--star-steps), end); }
     84.1%{ opacity:0; }
 
     /* LEG 8 */
-    87.5%{ opacity:0; transform: translate3d(112vw,74vh,0) rotate(var(--rocket-angle)); }
-    87.6%{ opacity:1; transform: translate3d(112vw,74vh,0) rotate(var(--rocket-angle)); }
-    96%  {           transform: translate3d(-88vw,-126vh,0) rotate(var(--rocket-angle)); animation-timing-function: steps(var(--rocket-steps), end); }
+    87.5%{ opacity:0; transform: translate3d(112vw,74vh,0) rotate(var(--star-angle)); }
+    87.6%{ opacity:1; transform: translate3d(112vw,74vh,0) rotate(var(--star-angle)); }
+    96%  {           transform: translate3d(-88vw,-126vh,0) rotate(var(--star-angle)); animation-timing-function: steps(var(--star-steps), end); }
     100% { opacity:0; }
   }
 }
+
+/* === SHOOTING STAR === END === */

@@ -2,7 +2,7 @@ body, html {
   background-color: #0F243B;
 }
 
-/* === STARFIELD === */
+/* === STARFIELD === START === */
 :root{
   --stars-color: #fff;
   --far-tile: 192px;
@@ -113,9 +113,9 @@ body, html {
   0%, 100% { opacity: var(--near-opacity); }
   50%      { opacity: 1; }
 }
+/* === STARFIELD === END === */
 
-
-/* === FOG === */
+/* === FOG === START === */
 :root{
   --fog-tile: 640px;      /* size of the seamless tile */
   --fog-opacity: 0.05;    /* overall fog strength */
@@ -169,6 +169,157 @@ body::before{
   to   { transform: translate3d(calc(var(--fog-tile) * -1), calc(var(--fog-tile) * -1), 0); }
 }
 
+/* === FOG === END === */
+
+/* === SHOOTING STAR === START === */
+
+:root{
+  --star-size: 70px;
+  --star-angle: 215deg;
+  --leg: 3s;
+  --legs: calc(var(--leg) * 8);
+  --star-steps: 240;
+}
+
+html, body { height: 100%; }
+body { position: relative; }
+
+body::after{
+  content:"";
+  position: fixed;
+  top: 0; left: 0;
+  width: var(--star-size);
+  height: calc(var(--star-size) * 2);
+  z-index: 6;
+  pointer-events: none;
+  background:
+    url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 140 40'>\
+  <defs>\
+    <linearGradient id='t' x1='100%' y1='50%' x2='0%' y2='50%'>\
+      <stop offset='0%' stop-color='%23fff' stop-opacity='0'/>\
+      <stop offset='20%' stop-color='%23fff' stop-opacity='.25'/>\
+      <stop offset='60%' stop-color='%23fff' stop-opacity='.6'/>\
+      <stop offset='100%' stop-color='%23fff' stop-opacity='.95'/>\
+    </linearGradient>\
+    <radialGradient id='c' cx='100%' cy='50%' r='30%'>\
+      <stop offset='0%' stop-color='%23fff'/>\
+      <stop offset='100%' stop-color='%23fff' stop-opacity='0'/>\
+    </radialGradient>\
+  </defs>\
+  <rect x='0' y='18' width='120' height='4' rx='2' fill='url(%23t)'/>\
+  <circle cx='120' cy='20' r='6' fill='url(%23c)'/>\
+</svg>") center / contain no-repeat;
+
+  /* performance hints */
+  will-change: transform, opacity;
+  contain: paint;
+  backface-visibility: hidden;
+  transform-origin: center;
+}
+
+/* ===== Modern path: animatable custom props + stepped transform ===== */
+@supports (property(--ox)) {
+
+  @property --ox { syntax: '<length-percentage>'; inherits: false; initial-value: 108vw; }
+  @property --oy { syntax: '<length-percentage>'; inherits: false; initial-value: 82vh; }
+  @property --tx { syntax: '<length-percentage>'; inherits: false; initial-value: 0vw; }
+  @property --ty { syntax: '<length-percentage>'; inherits: false; initial-value: 0vh; }
+
+  body::after{
+    transform:
+      translate3d(calc(var(--ox) + var(--tx)), calc(var(--oy) + var(--ty)), 0)
+      rotate(var(--star-angle));
+    animation:
+      /* per-leg motion done in discrete steps -> fewer compositor updates */
+      fly var(--leg) steps(var(--star-steps), end) infinite,
+      /* snapped re-seeding of start positions (8 legs) */
+      offsets var(--legs) steps(1, end) infinite;
+  }
+
+  /* Move across screen; hide only during the teleport frames */
+  @keyframes fly{
+    0%   { --tx: 0vw; --ty: 0vh;   opacity: 1; }
+    98%  {                        opacity: 1; }
+    99%  {                        opacity: 0; } /* hide before jump */
+    100% { --tx: -200vw; --ty: -200vh; opacity: 0; } /* off far corner */
+  }
+
+  /* 8 start offsets (kept close so star appears quickly each leg) */
+  @keyframes offsets{
+    0%,     12.499% { --ox: 108vw; --oy: 82vh; }
+    12.5%,  24.999% { --ox: 120vw; --oy: 70vh; }
+    25%,    37.499% { --ox: 102vw; --oy: 96vh; }
+    37.5%,  49.999% { --ox: 128vw; --oy: 78vh; }
+    50%,    62.499% { --ox: 110vw; --oy: 88vh; }
+    62.5%,  74.999% { --ox: 134vw; --oy: 80vh; }
+    75%,    87.499% { --ox: 118vw; --oy: 100vh; }
+    87.5%,  100%    { --ox: 112vw; --oy: 74vh; }
+  }
+}
+
+/* ===== Fallback: single keyframes set (no @property), still GPU + stepped ===== */
+@supports not (property(--ox)) {
+
+  body::after{
+    animation: starMulti var(--legs) linear infinite both;
+  }
+
+  /* We run 8 legs in one timeline; opacity goes 0?1 after the jump.
+     Motion is stepped to reduce compositor updates. */
+  @keyframes starMulti{
+
+    /* LEG 1 */
+    0%   { opacity:0; transform: translate3d(108vw,82vh,0) rotate(var(--star-angle)); }
+    0.1% { opacity:1; transform: translate3d(108vw,82vh,0) rotate(var(--star-angle)); }
+    12%  {           transform: translate3d(-92vw,-118vh,0) rotate(var(--star-angle)); animation-timing-function: steps(var(--star-steps), end); }
+    12.1%{ opacity:0; }
+
+    /* LEG 2 */
+    12.5%{ opacity:0; transform: translate3d(120vw,70vh,0) rotate(var(--star-angle)); }
+    12.6%{ opacity:1; transform: translate3d(120vw,70vh,0) rotate(var(--star-angle)); }
+    24%  {           transform: translate3d(-80vw,-130vh,0) rotate(var(--star-angle)); animation-timing-function: steps(var(--star-steps), end); }
+    24.1%{ opacity:0; }
+
+    /* LEG 3 */
+    25%  { opacity:0; transform: translate3d(102vw,96vh,0) rotate(var(--star-angle)); }
+    25.1%{ opacity:1; transform: translate3d(102vw,96vh,0) rotate(var(--star-angle)); }
+    36%  {           transform: translate3d(-98vw,-104vh,0) rotate(var(--star-angle)); animation-timing-function: steps(var(--star-steps), end); }
+    36.1%{ opacity:0; }
+
+    /* LEG 4 */
+    37.5%{ opacity:0; transform: translate3d(128vw,78vh,0) rotate(var(--star-angle)); }
+    37.6%{ opacity:1; transform: translate3d(128vw,78vh,0) rotate(var(--star-angle)); }
+    48%  {           transform: translate3d(-72vw,-122vh,0) rotate(var(--star-angle)); animation-timing-function: steps(var(--star-steps), end); }
+    48.1%{ opacity:0; }
+
+    /* LEG 5 */
+    50%  { opacity:0; transform: translate3d(110vw,88vh,0) rotate(var(--star-angle)); }
+    50.1%{ opacity:1; transform: translate3d(110vw,88vh,0) rotate(var(--star-angle)); }
+    60%  {           transform: translate3d(-90vw,-112vh,0) rotate(var(--star-angle)); animation-timing-function: steps(var(--star-steps), end); }
+    60.1%{ opacity:0; }
+
+    /* LEG 6 */
+    62.5%{ opacity:0; transform: translate3d(134vw,80vh,0) rotate(var(--star-angle)); }
+    62.6%{ opacity:1; transform: translate3d(134vw,80vh,0) rotate(var(--star-angle)); }
+    72%  {           transform: translate3d(-66vw,-120vh,0) rotate(var(--star-angle)); animation-timing-function: steps(var(--star-steps), end); }
+    72.1%{ opacity:0; }
+
+    /* LEG 7 */
+    75%  { opacity:0; transform: translate3d(118vw,100vh,0) rotate(var(--star-angle)); }
+    75.1%{ opacity:1; transform: translate3d(118vw,100vh,0) rotate(var(--star-angle)); }
+    84%  {           transform: translate3d(-82vw,-100vh,0) rotate(var(--star-angle)); animation-timing-function: steps(var(--star-steps), end); }
+    84.1%{ opacity:0; }
+
+    /* LEG 8 */
+    87.5%{ opacity:0; transform: translate3d(112vw,74vh,0) rotate(var(--star-angle)); }
+    87.6%{ opacity:1; transform: translate3d(112vw,74vh,0) rotate(var(--star-angle)); }
+    96%  {           transform: translate3d(-88vw,-126vh,0) rotate(var(--star-angle)); animation-timing-function: steps(var(--star-steps), end); }
+    100% { opacity:0; }
+  }
+}
+
+/* === SHOOTING STAR === END === */
 
 .relative.container.m-auto.flex.flex-col.justify-start.z-10.h-full {
   max-width:100%;
